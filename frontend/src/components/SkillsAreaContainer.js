@@ -31,14 +31,12 @@ export default function SkillsAreaContainer() {
     return () => {
       isMounted = false;
     };
-  }, [fetchGraphQL]);
+  }, []);
 
 
   let skillsAreaContentBuilder = () => {
     let skilsAreasContent = skillAreas.map(e => (
-      <div>
-        <SkillArea skillData={e}/>
-      </div>
+        <SkillArea key={e.id} skillData={e}/>
     ))
     return skilsAreasContent;
   }

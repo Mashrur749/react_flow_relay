@@ -1,14 +1,25 @@
 import React from 'react'
+import AddSkillModal from './AddSkillModal';
+
+const {useState} = React;
 
 export default function SkillArea({skillData}) {
-  
-  console.log("from skill area", skillData)
-  
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
   return (
     <div>
       <h1>{skillData.name}</h1>
-      <button> + </button>
-      {skillData.skills.edges.map(skill => <li> {skill.node.name} </li>)}
+      <button onClick={ () => setIsModalOpen(true) } > + </button>
+      
+      {skillData.skills.edges.map(skill => 
+        <li key={skill.node.id}> 
+          {skill.node.name} 
+        </li>
+      )}
+
+      <AddSkillModal skillAreaId={skillData.id}  open={isModalOpen} onClose={() => setIsModalOpen(false)}/>
     </div>
   )
 }
