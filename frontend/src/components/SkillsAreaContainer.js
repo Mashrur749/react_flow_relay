@@ -9,7 +9,7 @@ const { useState, useEffect } = React;
 
 
 export default function SkillsAreaContainer() {
-  const [skillAreas, setSkillAreas] = useState(null);
+  const [skillAreas, setSkillAreas] = useState([]);
 
 
   useEffect(() => {
@@ -19,9 +19,11 @@ export default function SkillsAreaContainer() {
       if (!isMounted) {
         return;
       }
-      const data = response.data;
-      console.log(data)
-      setSkillAreas(data);
+      
+      for( let skillArea in response.data){
+        setSkillAreas(prevState => [...prevState, response.data[skillArea]]);
+      }
+
     }).catch(error => {
       console.error(error);
     });
@@ -32,17 +34,21 @@ export default function SkillsAreaContainer() {
   }, [fetchGraphQL]);
 
 
-  let skillsAreaContent = () => {
-    if(skillAreas){
-      
-    }
+  let skillsAreaContentBuilder = () => {
+    let skilsAreasContent = skillAreas.map(e => (
+      <div>
+        <SkillArea skillData={e}/>
+      </div>
+    ))
+    return skilsAreasContent;
   }
 
 
   return (
     <div>
       Skill Area Container
-      {/* {skillAreas ? skillsAreaContent() : ""} */}
+      
+      {skillAreas ? skillsAreaContentBuilder() : ""}
     </div>
   )
 }

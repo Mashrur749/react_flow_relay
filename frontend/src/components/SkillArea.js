@@ -1,9 +1,14 @@
 import React from 'react'
 
-export default function SkillArea() {
+export default function SkillArea({skillData}) {
+  
+  console.log("from skill area", skillData)
+  
   return (
     <div>
-      Skill Area
+      <h1>{skillData.name}</h1>
+      <button> + </button>
+      {skillData.skills.edges.map(skill => <li> {skill.node.name} </li>)}
     </div>
   )
 }
