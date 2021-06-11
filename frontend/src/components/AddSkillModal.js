@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDom from 'react-dom'
+import {commitMutation, graphql} from 'react-relay';
 
 
 const {useState, useEffect} = React;
@@ -7,7 +8,6 @@ const {useState, useEffect} = React;
 
 export default function AddSkillModal({open, onClose, skillAreaId}) {
   
-  console.log(skillAreaId)
 
   let MODAL_STYLES = {
     position: "fixed",
@@ -37,15 +37,19 @@ export default function AddSkillModal({open, onClose, skillAreaId}) {
     setSkill(e.target.value);
   }
 
+  let handleClose = () => {
+    onClose();
+  }
+
 
   if(!open) return null
 
   return ReactDom.createPortal(    
       <>
-        <div style={OVERLAY_STYLES}></div>
+        <div style={OVERLAY_STYLES} onClick= { handleClose }></div>
 
         <div style={MODAL_STYLES}>
-          <button onClick= { ()=> { onClose() } } > X </button>
+          <button onClick= { handleClose } > X </button>
           <input type="text" value={skill} onChange={handleChange}/>
           <button> Cancel </button>
           <button> Add </button>
@@ -53,5 +57,4 @@ export default function AddSkillModal({open, onClose, skillAreaId}) {
       </>
       , document.getElementById('portal')
     )
-    
 }

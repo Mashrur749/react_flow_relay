@@ -1,4 +1,4 @@
-export const SKILL_AREA_QUERY = `query {
+export const SKILL_AREA_QUERY =  `query appQuery {
     frontEnd {
       id
       name
